@@ -6,12 +6,11 @@ import { AppContext } from './AppContext';
 import { app } from 'firebase';
 
 const App = () => {
-  const { appUser, signInWithGoogle } = useContext(AppContext);
+  const { appUser, signInWithGoogle, message } = useContext(AppContext);
 
   return (
     <StyledPageWrapper>
       <StyledHeader>
-
         {appUser && appUser.email ? (
           <StyledUserContainer>
             <Avatar src={appUser.photoURL} />
@@ -19,13 +18,12 @@ const App = () => {
               {appUser.displayName} ({appUser.email})
             </p>
           </StyledUserContainer>
-        ):
-          <button onClick={signInWithGoogle}
-          >
+        ): (
+          <button onClick={signInWithGoogle}>
             Sign In
           </button>
-
-        }
+          
+        )}
       </StyledHeader>
       <StyledContainer>{message}</StyledContainer>
     </StyledPageWrapper>
