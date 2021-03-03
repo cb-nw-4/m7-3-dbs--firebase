@@ -3,14 +3,29 @@ import styled from 'styled-components';
 import Avatar from './Avatar';
 
 import { AppContext } from './AppContext';
+import { app } from 'firebase';
 
 const App = () => {
-  const {} = useContext(AppContext);
+  const { appUser, signInWithGoogle } = useContext(AppContext);
 
   return (
     <StyledPageWrapper>
       <StyledHeader>
-        <button>Sign In</button>
+
+        {appUser && appUser.email ? (
+          <StyledUserContainer>
+            <Avatar src={appUser.photoURL} />
+            <p>
+              {appUser.displayName} ({appUser.email})
+            </p>
+          </StyledUserContainer>
+        ):
+          <button onClick={signInWithGoogle}
+          >
+            Sign In
+          </button>
+
+        }
       </StyledHeader>
       <StyledContainer>{message}</StyledContainer>
     </StyledPageWrapper>

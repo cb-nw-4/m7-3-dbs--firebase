@@ -12,7 +12,7 @@ express()
     res.header(
       'Access-Control-Allow-Methods',
       'OPTIONS, HEAD, GET, PUT, POST, DELETE'
-    );
+    );z
     res.header(
       'Access-Control-Allow-Headers',
       'Origin, X-Requested-With, Content-Type, Accept'
