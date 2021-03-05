@@ -1,5 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
 
+import withFirebaseAuth from 'react-with-firebase-auth';
+import * as firebase from 'firebase';
+import 'firebase/auth';
+
 export const AppContext = createContext(null);
 
 var firebaseConfig = {
@@ -11,8 +15,39 @@ var firebaseConfig = {
   appId: "1:832244567176:web:5f307b24220f588f44233d"
 };
 
-const AppProvider = ({ children }) => {
-  return <AppContext.Provider value={{}}>{children}</AppContext.Provider>;
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const firebaseAppAuth = firebaseApp.auth();
+
+const providers = {
+  googleProvider: new firebase.auth.GoogleAuthProvider()
 };
 
-export default AppProvider;
+const AppProvider = ({ children, signInWithGoogle, signOut, user }) => {
+  const [appUser, setAppUser] = useState({});
+
+  const handleSignOut = () => {
+    signOut();
+    setAppUser({});
+  };
+
+  useEffect(() => {
+    if (user) {
+      setAppUser({
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL
+      });
+    }
+  }, [user]);
+
+  return (
+    <AppContext.Provider value={{ appUser, signInWithGoogle, handleSignOut }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+export default withFirebaseAuth({
+  providers,
+  firebaseAppAuth
+})(AppProvider);
