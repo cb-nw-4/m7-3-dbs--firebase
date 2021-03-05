@@ -6,7 +6,7 @@ import { AppContext } from './AppContext';
 
 const App = () => {
   // const {} = useContext(AppContext);
-  const { appUser, signInWithGoogle, message } = useContext(AppContext);
+  const { appUser, signInWithGoogle, handleSignOut, message } = useContext(AppContext);
 
   return (
     <StyledPageWrapper>
@@ -17,6 +17,7 @@ const App = () => {
             <p>
               {appUser.displayName} ({appUser.email})
             </p>
+            <button onClick={handleSignOut}>Sign out</button>
           </StyledUserContainer>
         ) : (
           <button onClick={signInWithGoogle}>Sign In</button>
