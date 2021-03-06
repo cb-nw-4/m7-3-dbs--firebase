@@ -25,5 +25,6 @@ express()
   .use(express.urlencoded({ extended: false }))
 
   .post('/users', createUser)
+  // .get('/users', getUser);
 
   .listen(PORT, () => console.log(`Listening on port ${PORT}`));
